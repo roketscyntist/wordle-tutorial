@@ -12,8 +12,9 @@ while new_game:
     game_word = random.choice(word_list) # Let's choose a random secret word from the list. Here we use the random library we imported earlier
     game_word_l = list(game_word) # Now we break up the word into a list of characters (letters)
     game_word_c = len(game_word) # Number of letters in our secret word
+    guess_limit = game_word_c + 1
 
-    print(f"The secret word has {game_word_c} letters. You have {game_word_c} guesses remaning")
+    print(f"The secret word has {game_word_c} letters. You have {guess_limit} guesses remaning")
     guess_count = 0
     while True: # This will loop the round until we break out of it. (Number of guesses are up, or the player guesses right) 
         valid_guess = False # Default to an invalid guess. 
@@ -38,13 +39,13 @@ while new_game:
             elif guess_l[x] in game_word_l: output += Fore.YELLOW + guess_l[x] # If the character is in the secret word but wrong place, add it to our output in yellow
             else: output = output + Fore.RESET + guess_l[x] # If we get here then the character is not part of the secret word
 
-        if guess_count == game_word_c: # Player has run out of guesses.
+        if guess_count == guess_limit: # Player has run out of guesses.
             print(f"{output}\t {Fore.RED}You have run out of guesses :(")
             print(f"The secret word was {Fore.GREEN}{game_word}") # Print the secret word
             break # End the round
 
-        if (game_word_c - guess_count) == 1: output += f"{Style.RESET_ALL}\t last guess!" # Print a unique message for the last guess
-        else: output += f"{Style.RESET_ALL}\t {game_word_c - guess_count} guesses remaining"
+        if (guess_limit - guess_count) == 1: output += f"{Style.RESET_ALL}\t last guess!" # Print a unique message for the last guess
+        else: output += f"{Style.RESET_ALL}\t {guess_limit - guess_count} guesses remaining"
         print(output) # Print the result
 
     # once we get here, we are out of the loop and the round is over
